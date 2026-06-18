@@ -1,0 +1,17 @@
+# Model files (large binary files - don't upload to git)
+model_files/
+
+# Images folder
+images/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.env
+venv/
+.venv/
+
+# IDE
+.vscode/
+.idea/
