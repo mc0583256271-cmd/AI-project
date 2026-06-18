@@ -17,6 +17,11 @@ st.title("מערכת סיווג תמונות")
 uploaded_file = st.file_uploader("העלי תמונה", type=["jpg", "jpeg", "png"])
 
 if uploaded_file:
+    file_id = uploaded_file.file_id
+    if st.session_state.get('file_id') != file_id:
+        st.session_state['file_id'] = file_id
+        st.session_state.pop('label', None)
+
     image = Image.open(uploaded_file)
     st.image(image, caption="התמונה שהועלתה", use_container_width=True)
 
@@ -24,13 +29,11 @@ if uploaded_file:
         with st.spinner("מסווג..."):
             classifier = get_classifier()
             predictions = classifier.predict(image)
-
-        label = predictions[0]['label']
-        st.success(f"זוהה: {label}")
-        st.session_state['label'] = label
+        st.session_state['label'] = predictions[0]['label']
 
 if 'label' in st.session_state:
     label = st.session_state['label']
+    st.success(f"זוהה: {label}")
     rows, weights = service.get_available_weights(label)
     if rows is not None:
         selected_weight = st.select_slider(
