@@ -46,3 +46,5 @@ if uploaded_file:
             col4.metric("שומנים", f"{nutrients.get('fats', 'N/A'):.0f} גרם")
         else:
             st.warning(f"לא נמצאו נתונים תזונתיים עבור {label}")
+
+
